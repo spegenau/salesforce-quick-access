@@ -8,11 +8,13 @@ import Profile from "./setupItems/profile";
 import User from "./setupItems/user";
 import Language from "./setupItems/language";
 import PermissionSet from "./setupItems/permissionset";
+import CustomMetadata from "./setupItems/custommetadata";
 
 export default class Setup {
 	public static async open(org: Org): Promise<void> {
 		const items: SetupItem[] = [
 			new CompanyInfo(org),
+			new CustomMetadata(org),
 			new Deployment(org),
 			new Language(org),
 			new SFObject(org),

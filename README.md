@@ -9,6 +9,10 @@ This plugin was developed at [Reply](http://reply.com/).
 ## Features
 
 Adds 'Salesforce Setup' to command palette. With it you can
+* Custom Metadata Types
+  * View the list of custom metadata types
+  * Open a custom metadata type
+  * Manage records
 * Deployment
   * Deployment status
 * General Settings
@@ -41,6 +45,10 @@ SFDX CLI is installed and orgs you want to access are connected.
 ## Release Notes
 
 Users appreciate release notes as you update your extension.
+
+### 1.2.0
+
+Added custom metadata
 
 ### 1.1.0
 
