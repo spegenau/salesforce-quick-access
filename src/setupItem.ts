@@ -25,11 +25,17 @@ export default abstract class SetupItem {
 	}
 
 	public async open(): Promise<void> {
-		const selectedOption = await window.showQuickPick(Object.keys(this.options), {});
-		if(selectedOption) {
-			await this.options[selectedOption].bind(this)();
+		const keys = Object.keys(this.options);
+
+		if(keys.length === 1) {
+			await this.options[keys[0]].bind(this)();
 		} else {
-			Promise.resolve();
+			const selectedOption = await window.showQuickPick(Object.keys(this.options), {});
+			if(selectedOption) {
+				await this.options[selectedOption].bind(this)();
+			} else {
+				Promise.resolve();
+			}
 		}
 	}
 

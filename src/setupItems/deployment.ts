@@ -6,10 +6,14 @@ export default class Deployment extends SetupItem {
 	name: string = 'Deployment';
 
 	options = {
-		'DUMMY': this.dummyHandler,
+		'Open Deployment Status': this.openDeploymentStatus,
 	};
 	
 	constructor(org: Org) {
 		super(org);
+	}
+
+    async openDeploymentStatus(): Promise<void> {
+		this.openRelativeUrlInOrg('/lightning/setup/DeployStatus/home');
 	}
 }

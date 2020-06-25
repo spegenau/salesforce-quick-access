@@ -3,7 +3,11 @@
 	"displayName": "Salesforce Quick Access",
 	"publisher": "spegenau",
 	"description": "",
-	"version": "0.1",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/spegenau/salesforce-quick-access.git"
+	 },
+	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.44.0"
 	},

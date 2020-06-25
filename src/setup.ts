@@ -6,15 +6,17 @@ import Deployment from "./setupItems/deployment";
 import SFObject from "./setupItems/sfobject";
 import Profile from "./setupItems/profile";
 import User from "./setupItems/user";
+import Language from "./setupItems/language";
+import PermissionSet from "./setupItems/permissionset";
 
 export default class Setup {
 	public static async open(org: Org): Promise<void> {
 		const items: SetupItem[] = [
-			/*
-			new CompanyInfo(),
-			new Deployment(),
-			*/
+			new CompanyInfo(org),
+			new Deployment(org),
+			new Language(org),
 			new SFObject(org),
+			new PermissionSet(org),
 			new Profile(org),
 			new User(org)
 		];

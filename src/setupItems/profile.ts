@@ -1,5 +1,5 @@
 import SetupItem from "../setupItem";
-import { Org } from "@salesforce/core";
+import { Org, User } from "@salesforce/core";
 import { QuickPickItem, window } from "vscode";
 
 type Id = string;
@@ -15,7 +15,7 @@ export default class Profile extends SetupItem {
 
 	options = {
 		'Profile List': this.openProfileList,
-		'Open Profile...': this.openProfile,
+		'Open Profile...': this.readProfile,
 		'Edit Profile...': this.editProfile,
 	};
 	
@@ -27,17 +27,25 @@ export default class Profile extends SetupItem {
 		this.openRelativeUrlInOrg('/lightning/setup/EnhancedProfiles/home');
 	}
 
-	async openProfile(): Promise<void> {
+	async readProfile(): Promise<void> {
 		const profileId = (await this.selectProfile());
 		if(profileId) {
-			this.openRelativeUrlInOrg(`/lightning/setup/EnhancedProfiles/page?address=/${profileId}`);
+			this.openProfile(profileId, false);
 		}
 	}
 	
 	async editProfile(): Promise<void> {
 		const profileId = (await this.selectProfile());
 		if(profileId) {
+			this.openProfile(profileId, true);
+		}
+	}
+
+	public async openProfile(profileId: string, inEditMode: boolean): Promise<void> {
+		if(inEditMode) {
 			this.openRelativeUrlInOrg(`/lightning/setup/EnhancedProfiles/page?address=/${profileId}/e`);
+		} else {
+			this.openRelativeUrlInOrg(`/lightning/setup/EnhancedProfiles/page?address=/${profileId}`);
 		}
 	}
 

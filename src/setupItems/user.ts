@@ -1,6 +1,7 @@
 import SetupItem from "../setupItem";
 import { Org } from "@salesforce/core";
 import { window, QuickPickItem } from "vscode";
+import Profile from "./profile";
 
 interface IUser {
 	Id: string,
@@ -20,7 +21,9 @@ export default class User extends SetupItem {
 		'Open active User...': this.openUser.bind(this, true),
 		'Edit active User...': this.editUser.bind(this, true),
 		'Open User...': this.openUser,
-		'Edit User...': this.editUser
+		'Edit User...': this.editUser,
+		'View users profile': this.openUsersProfile,
+		'Edit users profile': this.openUsersProfile.bind(this, true)
 	};
 
 	constructor(org: Org) {
@@ -42,6 +45,16 @@ export default class User extends SetupItem {
 		const userId = (await this.selectUser(activeOnly));
 		if(userId) {
 			this.openRelativeUrlInOrg(`/lightning/setup/ManageUsers/page?address=/${userId}/e?isUserEntityOverride=1&retURL/005?isUserEntityOverride=1&noredirect=1`);
+		}
+	}
+
+	async openUsersProfile(inEditMode: boolean = false): Promise<void> {
+		const userId = (await this.selectUser(true));
+		if(userId) {
+			const soql = `SELECT ProfileId from User WHERE Id = '${userId}'`;
+			const profileId = ((await this.connection.query(soql)).records[0] as any).ProfileId;
+			const profile = new Profile(this.org);
+			profile.openProfile(profileId, inEditMode);
 		}
 	}
 
