@@ -16,7 +16,8 @@
 	],
 	"activationEvents": [
 		"onCommand:salesforce-quick-access.openSFSetup",
-		"onCommand:salesforce-quick-access.openSFSetupOtherOrg"
+		"onCommand:salesforce-quick-access.openSFSetupOtherOrg",
+		"onCommand:salesforce-quick-access.openFile"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -28,8 +29,21 @@
 			{
 				"command": "salesforce-quick-access.openSFSetupOtherOrg",
 				"title": "Salesforce Setup in Org..."
+			},
+			{
+				"command": "salesforce-quick-access.openFile",
+				"title": "Salesforce Setup: Open File"
 			}
-		]
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"when": "resourceFilename =~ /\\.field-meta\\.xml$/",
+					"command": "salesforce-quick-access.openFile",
+					"group": "SalesforceSetup@1"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

@@ -25,12 +25,20 @@ export async function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
+	
+	let openFile = vscode.commands.registerCommand('salesforce-quick-access.openFile', async (uri:vscode.Uri) => {
+		const org = await SFOrg.getDefaultOrg();
+		if(org) {
+			await Setup.openFile(org, uri);
+		}
+	});
+
 	// Delete all logs
-	// Open user
 	// Perform login as in an incognito browser window
 	
 	context.subscriptions.push(openSFSetup);
 	context.subscriptions.push(openSFSetupOtherOrg);
+	context.subscriptions.push(openFile);
 }
 
 // this method is called when your extension is deactivated

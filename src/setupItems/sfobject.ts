@@ -1,6 +1,6 @@
 import SetupItem from "../setupItem";
 import { Org } from "@salesforce/core";
-import { QuickPickItem, window } from "vscode";
+import { QuickPickItem, window, Uri } from "vscode";
 
 interface ISObject {
 	name: string,
@@ -25,6 +25,9 @@ export default class SFObject extends SetupItem {
 		'Open Object...': this.openObject,
 		'Open Field...': this.openField
 	};
+
+	opensFile = true;
+	fileMatcher = /\.field-meta\.xml$/g;
 	
 	constructor(org: Org) {
 		super(org);
@@ -41,16 +44,15 @@ export default class SFObject extends SetupItem {
 		}
 	}
 
-	async openField(): Promise<void> {
-		this.connection.sobject
-
-		const sObjectName = await this.selectObject();
-		if(sObjectName) {
-			const field = await this.selectField(sObjectName);
-			if(field) {
-				this.openRelativeUrlInOrg(`/lightning/setup/ObjectManager/${sObjectName}/FieldsAndRelationships/${field}/view`);
-			}
-		}
+	async openFile(uri: Uri): Promise<void> {
+		// Do something
+		window.showInformationMessage('HOOORAY');
+		const pathParts = uri.path.split('/');
+		const [sObjectType, fieldsFolder, filename] = pathParts.slice(-3);
+		const fieldApiName = filename.replace('.field-meta.xml', '');
+		const fieldApiNameOrId = await this.getFieldId(sObjectType,fieldApiName);
+		
+		this.openField(sObjectType, fieldApiNameOrId);
 	}
 
 	private async selectObject(): Promise<SObjectName> {
@@ -80,6 +82,15 @@ export default class SFObject extends SetupItem {
 		});
 	}
 
+	async openField(sObjectName: string|undefined = undefined, fieldApiName: string|undefined = undefined): Promise<void> {
+		const sObjectType: string = (sObjectName) ? sObjectName : await this.selectObject();
+		if(sObjectType) {
+			const field = (fieldApiName) ? fieldApiName : await this.selectField(sObjectType);
+			if(field) {
+				this.openRelativeUrlInOrg(`/lightning/setup/ObjectManager/${sObjectType}/FieldsAndRelationships/${field}/view`);
+			}
+		}
+	}
 
 	private async selectField(sObjectName: SObjectName): Promise<string> {
 		const fields = await this.getFields(sObjectName);
@@ -89,10 +100,14 @@ export default class SFObject extends SetupItem {
 		
 		const field: IField = fields.filter(field => field.name === (selectedQuickPickItem || {}).description)[0] || {};
 
-		if(field.name.endsWith('__c')) {
-			return Promise.resolve(await this.getFieldId(sObjectName, field.name));
+		return await this.getFieldApiNameOrId(sObjectName, field.name);
+	}
+
+	private async getFieldApiNameOrId(sObjectName: SObjectName, fieldApiName: string): Promise<string> {
+		if(fieldApiName.endsWith('__c')) {
+			return Promise.resolve(await this.getFieldId(sObjectName, fieldApiName));
 		} else {
-			return Promise.resolve(field.name);
+			return Promise.resolve(fieldApiName);
 		}
 	}
 

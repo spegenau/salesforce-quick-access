@@ -4,37 +4,44 @@ Quickly jump into Salesforce Setup.
 
 THIS IS NOT AN OFFICIAL PRODUCT BY SALESFORCE!
 
-This plugin was developed at [Reply](http://reply.com/). 
+This plugin was developed at [Reply](http://reply.com/).
 
 ## Features
 
-Adds 'Salesforce Setup' to command palette. With it you can
-* Custom Metadata Types
-  * View the list of custom metadata types
-  * Open a custom metadata type
-  * Manage records
-* Deployment
-  * Deployment status
-* General Settings
-  * Open users locale page
-  * View Company Info
-* Objects
-  * Open the object Manager
-  * Open an object
-  * Open a field
-* Permission Sets
-  * View the list of permission sets
-  * Open a permission set
-  * View permission sets assignments
-* Profiles
-  * View the list of profiles
-  * Open a profile
-  * Edit a profile
-* Users
-  * View the users list in Salesforce
-  * Open an (active or all) user
-  * Edit an user
-  * Edit/Open users profile
+Adds 'Salesforce Setup' to command palette. With it you can open
+
+-   Custom Metadata Types
+    -   View the list of custom metadata types
+    -   Open a custom metadata type
+    -   Manage records
+-   Debug
+    -   Debug Logs
+    -   Lightning Debug Mode
+-   Deployment
+    -   Deployment status
+-   Developer Console
+-   General Settings
+    -   Open users locale page
+    -   View Company Info
+-   Objects
+    -   Open the object Manager
+    -   Open an object
+    -   Open a field
+-   Permission Sets
+    -   View the list of permission sets
+    -   Open a permission set
+    -   View permission sets assignments
+-   Process Builder
+-   Profiles
+    -   View the list of profiles
+    -   Open a profile
+    -   Edit a profile
+-   Sandboxes
+-   Users
+    -   View the users list in Salesforce
+    -   Open an (active or all) user
+    -   Edit an user
+    -   Edit/Open users profile
 
 As target org you can use the projects default org or one of the orgs you have connected with SFDX CLI tool.
 
@@ -44,7 +51,9 @@ SFDX CLI is installed and orgs you want to access are connected.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 1.3.0
+
+Added debug pages (Lightning, Apex), Developer Console, Process Builder, Sandboxes. Foundation to open meta data files in Salesforce.
 
 ### 1.2.0
 
@@ -58,5 +67,4 @@ Added users profile, permission sets, users locale, deployment status, company i
 
 Initial release. Support objects, profiles and users.
 
------------------------------------------------------------------------------------------------------------
-
+---

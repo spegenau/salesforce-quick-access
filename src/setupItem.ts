@@ -1,4 +1,4 @@
-import { QuickPickItem, window } from "vscode";
+import { QuickPickItem, window, Uri } from "vscode";
 import { Org, Connection, AuthInfo } from "@salesforce/core";
 
 const open = require('open');
@@ -16,6 +16,9 @@ export default abstract class SetupItem {
 	connection: Connection;
 	accessToken: string;
 	orgId: string;
+
+	opensFile: boolean = false;
+	fileMatcher: RegExp|undefined;
 
 	constructor(org: Org) {
 		this.org = org;
@@ -37,6 +40,10 @@ export default abstract class SetupItem {
 				Promise.resolve();
 			}
 		}
+	}
+
+	public async openFile(uri: Uri) {
+		window.showErrorMessage("NOT IMPLEMENTED YET");
 	}
 
 	public async openRelativeUrlInOrg(relUrl: string) {
