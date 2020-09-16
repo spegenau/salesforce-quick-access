@@ -10,6 +10,10 @@ This plugin was developed at [Reply](http://reply.com/).
 
 Adds 'Salesforce Setup' to command palette. With it you can open
 
+-   Community
+    -   View the list
+    -   Open community in builder
+    -   Open community itself
 -   Custom Metadata Types
     -   View the list of custom metadata types
     -   Open a custom metadata type
@@ -50,6 +54,10 @@ As target org you can use the projects default org or one of the orgs you have c
 SFDX CLI is installed and orgs you want to access are connected.
 
 ## Release Notes
+
+### 1.4.0
+
+Added community support (Open list of communities, community builder and the community itself)
 
 ### 1.3.0
 

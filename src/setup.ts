@@ -1,5 +1,6 @@
 import { Org } from "@salesforce/core";
 import { window, Uri } from "vscode";
+import Community from "./setupItems/community";
 import CompanyInfo from "./setupItems/companyInfo";
 import SetupItem from "./setupItem";
 import Deployment from "./setupItems/deployment";
@@ -49,6 +50,7 @@ export default class Setup {
 
     private static getItems(org: Org): SetupItem[] {
         return [
+            new Community(org),
             new CompanyInfo(org),
             new Debug(org),
             new DeveloperConsole(org),
