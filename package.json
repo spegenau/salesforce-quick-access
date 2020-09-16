@@ -7,7 +7,7 @@
 		"type": "git",
 		"url": "git+https://github.com/spegenau/salesforce-quick-access.git"
 	},
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"engines": {
 		"vscode": "^1.44.0"
 	},
@@ -67,5 +67,8 @@
 		"open": "^7.0.4",
 		"typescript": "^3.8.3",
 		"vscode-test": "^1.3.0"
+	},
+	"devDependencies": {
+		"@types/mkdirp": "^1.0.1"
 	}
 }
