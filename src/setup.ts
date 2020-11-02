@@ -10,6 +10,7 @@ import User from "./setupItems/user";
 import Language from "./setupItems/language";
 import PermissionSet from "./setupItems/permissionset";
 import CustomMetadata from "./setupItems/custommetadata";
+import Tab from "./setupItems/tab";
 
 import Sandbox from "./setupItems/sandbox";
 import Debug from "./setupItems/debug";
@@ -62,6 +63,7 @@ export default class Setup {
             new ProcessBuilder(org),
             new Profile(org),
             new Sandbox(org),
+            new Tab(org),
             new User(org),
         ];
     }
