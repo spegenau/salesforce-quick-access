@@ -23,7 +23,6 @@ export default class Tab extends SetupItem {
         const tab = await this.selectTab();
         if (tab) {
             const { instanceUrl } = this.connection;
-            debugger;
             this.openRelativeUrlInOrg(`${tab.Url.replace(instanceUrl, "")}`);
         }
     }

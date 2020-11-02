@@ -7,7 +7,7 @@
 		"type": "git",
 		"url": "git+https://github.com/spegenau/salesforce-quick-access.git"
 	},
-	"version": "1.6.0",
+	"version": "1.7.0",
 	"engines": {
 		"vscode": "^1.50.0"
 	},
@@ -66,6 +66,7 @@
 	},
 	"dependencies": {
 		"@salesforce/core": "^2.15.0",
+		"@types/mkdirp": "^1.0.1",
 		"faye": "^1.4.0",
 		"glob": "^7.1.6",
 		"mocha": "^7.2.0",
