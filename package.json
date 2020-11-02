@@ -7,7 +7,7 @@
 		"type": "git",
 		"url": "git+https://github.com/spegenau/salesforce-quick-access.git"
 	},
-	"version": "1.7.0",
+	"version": "1.8.0",
 	"engines": {
 		"vscode": "^1.50.0"
 	},
