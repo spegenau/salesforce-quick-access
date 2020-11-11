@@ -21,6 +21,7 @@ Adds 'Salesforce Setup' to command palette. With it you can open
 -   Debug
     -   Debug Logs
     -   Lightning Debug Mode
+    -   Delete all Apex Debug Logs
 -   Deployment
     -   Deployment status
 -   Developer Console
@@ -54,6 +55,14 @@ As target org you can use the projects default org or one of the orgs you have c
 SFDX CLI is installed and orgs you want to access are connected.
 
 ## Release Notes
+
+### 1.9.0
+
+Added "delete all apex debug logs"
+
+### 1.8.0
+
+Added Tab support
 
 ### 1.4.0
 
