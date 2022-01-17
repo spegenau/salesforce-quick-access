@@ -1,8 +1,8 @@
 # Salesforce Quick Access - VS Code Extension
 
-Quickly jump into Salesforce Setup.
+Quickly jump into Salesforce
 
-THIS IS NOT AN OFFICIAL PRODUCT BY SALESFORCE!
+THIS IS NOT AN OFFICIAL SALESFORCE PRODUCT!
 
 This plugin was developed at [Reply](http://reply.com/).
 
@@ -22,11 +22,14 @@ Adds 'Salesforce Setup' to command palette. With it you can open
     -   Debug Logs
     -   Lightning Debug Mode
     -   Delete all Apex Debug Logs
+    -   Turn ON Lightning Debug Mode
+    -   Turn OFF Lightning Debug Mode
 -   Deployment
     -   Deployment status
 -   Developer Console
 -   General Settings
     -   Open users locale page
+    -   Set current users language to English/German
     -   View Company Info
 -   Objects
     -   Open the object Manager
@@ -55,6 +58,12 @@ As target org you can use the projects default org or one of the orgs you have c
 SFDX CLI is installed and orgs you want to access are connected.
 
 ## Release Notes
+
+### 2.0.0
+
+Added
+    - Turn On/Off Lightning Debug Mode
+    - Switch Users Language directly to German/English
 
 ### 1.9.0
 

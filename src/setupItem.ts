@@ -11,7 +11,7 @@ export interface SetupItemOption {
 export default abstract class SetupItem {
     abstract label: string;
     abstract name: string;
-    abstract options: SetupItemOption = {};
+    abstract options: SetupItemOption;
     org: Org;
     connection: Connection;
     accessToken: string;
