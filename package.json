@@ -65,7 +65,7 @@
 		"vscode-test": "^1.6.1"
 	},
 	"dependencies": {
-		"@salesforce/core": "^2.33.1",
+		"@salesforce/core": "^3.32.12",
 		"@types/mkdirp": "^1.0.2",
 		"faye": "^1.4.0",
 		"glob": "^7.2.0",
