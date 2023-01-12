@@ -2,20 +2,15 @@ import {
     AuthInfo,
     Org,
     Connection,
-    Aliases,
-    AuthFields,
     ConfigFile,
+    OrgAuthorization,
 } from "@salesforce/core";
 import { window, QuickPickItem, workspace, WorkspaceFolder } from "vscode";
 import * as path from "path";
+import { ARR_REDUCE } from "./util";
 
 interface IMap {
     [key: string]: string;
-}
-
-interface IAuthInfoFields {
-    username: string;
-    instanceUrl: string;
 }
 
 function hasRootWorkspace(ws: typeof workspace = workspace) {
@@ -45,7 +40,7 @@ export default class SFOrg {
 
         const aliasOrUsername: string | undefined = projectConfig.getContents().defaultusername as string;
         if (aliasOrUsername) {
-			const username = await this.getUsername(aliasOrUsername);
+            const username = await this.getUsername(aliasOrUsername);
             return this.getOrg(username);
         } else {
             window.showErrorMessage("No default org found");
@@ -54,24 +49,17 @@ export default class SFOrg {
     }
 
     public static async chooseOrg(): Promise<Org | undefined> {
-        const allUsernames = (await AuthInfo.listAllAuthFiles()).map((filename) => filename.replace(".json", ""));
-        const aliases = await Aliases.create({ defaultGroup: Aliases.getDefaultOptions().defaultGroup });
-        const aliasToUsername: IMap = aliases.getContents().orgs as IMap;
-        const usernameToAlias = Object.keys(aliasToUsername)
-            .map((alias) => ({ [aliasToUsername[alias]]: alias }))
-            .reduce((a, b) => ({ ...a, ...b }));
-        const authInfos: AuthInfo[] = await Promise.all(allUsernames.map(this.getAuthInfo));
-        const fields: AuthFields[] = authInfos.map((info) => info.getFields());
+        const authorizations: OrgAuthorization[] = await AuthInfo.listAllAuthorizations();
 
-        const quickPickItems: QuickPickItem[] = fields.map((field) => {
-            const username: string = field.username || "";
-            const alias: string = (usernameToAlias as any)[username];
+        const quickPickItems: QuickPickItem[] = authorizations.map((auth: OrgAuthorization) => {
+            const label: string = (auth.aliases && auth.aliases.length > 0) ? auth.aliases.join(', ') : auth.username;
             return {
-                label: (alias || username) as string,
-                description: username,
-                detail: field.instanceUrl as string,
+                label,
+                description: auth.username,
+                detail: auth.instanceUrl,
             };
         });
+
         const selectedQuickPickItem = await window.showQuickPick(quickPickItems, {
             matchOnDescription: true,
             matchOnDetail: true,
@@ -80,27 +68,30 @@ export default class SFOrg {
         if (selectedQuickPickItem) {
             const username = selectedQuickPickItem.description;
             console.log("Username: " + username);
-            return this.getOrg(selectedQuickPickItem.description as string);
+            return this.getOrg(username as string);
         } else {
             return undefined;
         }
     }
 
     private static async getOrg(username: string) {
-        const authInfo = await this.getAuthInfo(username);
+        const authInfo = await AuthInfo.create({
+            username
+        });
+
         const connection = await Connection.create({ authInfo });
         const org = await Org.create({ connection });
         await org.refreshAuth();
         return org;
     }
 
-    private static async getAuthInfo(username: string) {
-        return AuthInfo.create({ username });
-    }
-
     private static async getUsername(usernameOrAlias: string): Promise<string> {
-        const aliases = await Aliases.create({ defaultGroup: Aliases.getDefaultOptions().defaultGroup });
-        const aliasToUsername: IMap = aliases.getContents().orgs as IMap;
+        const authorizations: OrgAuthorization[] = await AuthInfo.listAllAuthorizations();
+
+        const aliasToUsername: IMap = authorizations.map(auth => {
+            return (auth.aliases ?? []).map((alias: string) => ({ [alias]: auth.username })).reduce((a: IMap, b: IMap) => ({ ...a, ...b }), {});
+        }).reduce((a: IMap, b: IMap) => ({ ...a, ...b }), {});
+
         return aliasToUsername[usernameOrAlias] || usernameOrAlias;
     }
 }

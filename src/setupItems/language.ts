@@ -22,14 +22,14 @@ export default class Language extends SetupItem {
     
 	private async setUsersLanguage(language: 'de'|'en_US'): Promise<void> {
 		const apex = `update new User(Id = UserInfo.getUserId(), LanguageLocaleKey  = '${language}');`;
-        this.connection.tooling.executeAnonymous(apex, (err, res) => {
-            if(err) {
-                window.showErrorMessage(err.message);
-            } else if(!res.success) {
-                window.showErrorMessage(res.compileProblem);
-            } else {
-                window.showInformationMessage(`Successfully set users language to ${language}`);
-            }
-        });
+        
+        const result = await this.connection.tooling.executeAnonymous(apex);
+
+        if(result.success) {
+            window.showInformationMessage(`Successfully set users language to ${language}`);
+        } else {
+            const msg: string = result.compileProblem ?? result.exceptionMessage ?? 'No error message';
+            window.showErrorMessage(msg);
+        }
 	}
 }

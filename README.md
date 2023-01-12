@@ -27,6 +27,10 @@ Adds 'Salesforce Setup' to command palette. With it you can open
 -   Deployment
     -   Deployment status
 -   Developer Console
+-   Flows
+    -   Open Flow List
+    -   Edit Flow
+    -   Show Flow Details
 -   General Settings
     -   Open users locale page
     -   Set current users language to English/German

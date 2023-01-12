@@ -24,7 +24,7 @@ export default abstract class SetupItem {
         this.org = org;
         this.orgId = org.getOrgId();
         this.connection = org.getConnection();
-        this.accessToken = this.connection.accessToken;
+        this.accessToken = this.connection.accessToken ?? '';
     }
 
     public async open(): Promise<void> {
@@ -71,7 +71,7 @@ export default abstract class SetupItem {
     private async getLoginUrl(): Promise<string> {
         const { instanceUrl, accessToken } = this.connection;
         const authInfo = await AuthInfo.create({
-            username: accessToken,
+            username: accessToken ?? '',
         });
 
         return Promise.resolve(`${instanceUrl}/secur/frontdoor.jsp?sid=${authInfo.getFields().username}`);

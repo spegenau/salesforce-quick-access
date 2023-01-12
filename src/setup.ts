@@ -2,15 +2,16 @@ import { Org } from "@salesforce/core";
 import { window, Uri } from "vscode";
 import Community from "./setupItems/community";
 import CompanyInfo from "./setupItems/companyInfo";
-import SetupItem from "./setupItem";
+import CustomMetadata from "./setupItems/custommetadata";
 import Deployment from "./setupItems/deployment";
-import SFObject from "./setupItems/sfobject";
-import Profile from "./setupItems/profile";
-import User from "./setupItems/user";
+import Flow from "./setupItems/flow";
 import Language from "./setupItems/language";
 import PermissionSet from "./setupItems/permissionset";
-import CustomMetadata from "./setupItems/custommetadata";
+import Profile from "./setupItems/profile";
+import SetupItem from "./setupItem";
+import SFObject from "./setupItems/sfobject";
 import Tab from "./setupItems/tab";
+import User from "./setupItems/user";
 
 import Sandbox from "./setupItems/sandbox";
 import Debug from "./setupItems/debug";
@@ -65,6 +66,7 @@ export default class Setup {
             new Sandbox(org),
             new Tab(org),
             new User(org),
+            new Flow(org)
         ];
     }
 }

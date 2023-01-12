@@ -49,14 +49,15 @@ export default class Debug extends SetupItem {
 
     async setDebugModeTo(active: boolean): Promise<void> {
         const apex = `update new User(Id = UserInfo.getUserId(), UserPreferencesUserDebugModePref = ${active ? 'true' : 'false'});`;
-        this.connection.tooling.executeAnonymous(apex, (err, res) => {
-            if(err) {
-                window.showErrorMessage(err.message);
-            } else if(!res.success) {
-                window.showErrorMessage(res.compileProblem);
-            } else {
-                window.showInformationMessage(`Successfully turned Lightning Debug Mode ${active ? 'ON' : 'OFF'}`);
-            }
-        });
+
+        const result = await this.connection.tooling.executeAnonymous(apex);
+
+
+        if(result.success) {
+            window.showInformationMessage(`Successfully turned Lightning Debug Mode ${active ? 'ON' : 'OFF'}`);
+        } else {
+            const msg: string = result.compileProblem ?? result.exceptionMessage ?? 'No error message';
+            window.showErrorMessage(msg);
+        }
     }
 }
